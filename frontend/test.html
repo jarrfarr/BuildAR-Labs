@@ -204,7 +204,7 @@
 		// Register the root service worker so caching works
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', () => {
-				navigator.serviceWorker.register('/service-worker.js')
+				navigator.serviceWorker.register('/backend/service-worker.js')
 					.then(reg => console.log('✅ Root Service Worker registered from test:', reg.scope))
 					.catch(err => console.error('❌ Root Service Worker registration failed (test):', err));
 			});

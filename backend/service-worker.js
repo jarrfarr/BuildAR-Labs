@@ -5,6 +5,7 @@ const FILES_TO_CACHE = [
   '/frontend/test.html',
   '/frontend/style.css',
   '/model/model.glb',
+  '/model/model-large.glb',
   '/backend/manifest.json',
   'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js'
 ];
@@ -62,6 +63,19 @@ self.addEventListener('message', (event) => {
         }
       } catch (err) {
         console.error('Cache-url failed', err);
+      }
+    });
+  }
+  if (action === 'uncache-url' && url) {
+    caches.open(CACHE_NAME).then(async (cache) => {
+      try {
+        const removed = await cache.delete(url);
+        const clients = await self.clients.matchAll();
+        for (const client of clients) {
+          client.postMessage({ type: 'uncache-complete', url, removed });
+        }
+      } catch (err) {
+        console.error('Uncache-url failed', err);
       }
     });
   }
