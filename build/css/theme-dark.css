@@ -1,8 +1,8 @@
 [data-theme="dark"] {
-  --bg: #080f16; /* deep navy/blue instead of pure black */
+  --bg: #191c22; /* deep navy/blue instead of pure black */
   --text: #e6eef8;
-  --muted: #bcd3f0;
-  --accent: #4884b4; /* lighter accent for highlights */
+  --muted: #51ff00;
+  --accent: #98d5e7; /* lighter accent for highlights */
 }
 
 /* Make asset cards slightly lighter than page in dark mode */
