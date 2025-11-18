@@ -5,17 +5,22 @@ const FILES_TO_CACHE = [
   "/css/style.css",
   "/js/main.js",
   "/pages/home.html",
-  "/pages/preferences.html",
+  "/pages/.preferences.html",
   "/pages/install.html",
+  "/pages/siga-majvest_200.html", 
   "/manifest.json",
+
+  // cache the following fonts
+  "/assets/fonts/roboto-300.woff2",
+  "/assets/fonts/roboto-400.woff2",
+  "/assets/fonts/roboto-500.woff2",
+  "/assets/fonts/roboto-700.woff2",
+
   // local assets we want available offline after first install
   "/assets/pdfs/sample.pdf",
   "/assets/models/model.glb",
-  "/assets/videos/sample.mp4"
-  , "/assets/fonts/roboto-300.woff2"
-  , "/assets/fonts/roboto-400.woff2"
-  , "/assets/fonts/roboto-500.woff2"
-  , "/assets/fonts/roboto-700.woff2"
+  "/assets/videos/sample.mp4",
+
 ];
 
 self.addEventListener("install", event => {
@@ -40,7 +45,7 @@ self.addEventListener("fetch", event => {
         // If response is invalid, just pass it through
         if (!response || (response.status !== 200 && response.type !== 'opaque')) {
           return response;
-        }
+          
 
         // Clone response before caching because response is a stream
         const responseClone = response.clone();

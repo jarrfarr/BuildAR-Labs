@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Page</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        .hero-container {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 1.0);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
+
+        .glow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            opacity: 0.5;
+        }
+
+        .glow-container svg {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 2px 3px #ff69b4);
+            opacity: 0.8;
+        }
+
+        .glow-container svg path {
+            fill: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-container">
+        <img src="your-image-url.jpg" alt="Hero Image" class="hero-image">
+        <div class="glow-container"></div>
+    </div>
+
+    <script>
+        // Add any JavaScript here if needed
+    </script>
+</body>
+</html>
