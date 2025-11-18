@@ -1,27 +1,143 @@
-[data-theme="dark"] {
-  --bg: #191c22; /* deep navy/blue instead of pure black */
-  --text: #e6eef8;
-  --muted: #51ff00;
-  --accent: #98d5e7; /* lighter accent for highlights */
+/* ----------  Default Dark Theme  ---------- */
+
+/* 1️⃣ Root variables – pitch‑black UI with slate‑grey accents, white outlines & glows */
+:root {
+  --bg: #111;                /* deep pitch‑black background */
+  --text: #fff;              /* white text for maximum contrast */
+  --accent: #9aa0a6;         /* slate‑grey accent (used for borders, glows) */
+  --muted: #00ffcc;          /* neon‑green for subtle UI cues */
+  --outline: rgba(255,255,255,0.12);  /* faint white outline used in glows */
 }
 
-/* Make asset cards slightly lighter than page in dark mode */
-[data-theme="dark"] .asset-card {
-  background: #00000000;
-  border-color: rgb(255, 255, 255);
-  box-shadow: 01px 1px 2x rgba(104, 104, 104, 0.7);
+/* 2️⃣ Global styles – remove data‑theme selectors, use the new root vars */
+body {
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* title badge tweak for dark */
-[data-theme="dark"] .page-header h2 {
-  background: rgba(255, 255, 255, 0.04);
-  padding: 0.3rem 0.7rem;
+/* 3️⃣ Asset cards – drop‑shadow + white outline */
+.asset-card {
+  background: var(--bg);
+  border: 1px solid var(--outline);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.08);
 }
 
-/* Improve model-viewer appearance in dark mode */
-[data-theme="dark"] model-viewer {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.6));
+/* 4️⃣ Page header badge – subtle white glow */
+.page-header h2 {
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
 }
-[data-theme="dark"] .media-card .pdf-wrap {
-  border-color: rgba(255, 255, 255, 0.06);
+
+/* 5️⃣ Model‑viewer background – dark gradient with slight glow */
+model-viewer {
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+}
+
+/* 6️⃣ PDF wrapper border – faint white */
+.media-card .pdf-wrap {
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* 7️⃣ FPS overlay – white glow */
+.fps-overlay {
+  background: rgba(255,255,255,0.92);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* 8️⃣ Notification – white outline & glow */
+.notification {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.notification-success { background: var(--muted); }
+.notification-error   { background: #ff4d4d; }
+.notification-info    { background: var(--accent); }
+
+/* 9️⃣ Button – white outline, subtle drop‑shadow */
+.btn-primary {
+  background: var(--accent);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 2px 4px rgba(255,255,255,0.08);
+}
+
+/* 10️⃣ Offline banner – white outline glow */
+.offline-banner {
+  background: #f59e0b;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* 1️⃣ Root variables – pitch‑black UI with slate‑grey accents, white outlines & glows */
+:root {
+  --bg: #111;                /* deep pitch‑black background */
+  --text: #fff;              /* white text for maximum contrast */
+  --accent: #9aa0a6;         /* slate‑grey accent (used for borders, glows) */
+  --muted: #00ffcc;          /* neon‑green for subtle UI cues */
+  --outline: rgba(255,255,255,0.12);  /* faint white outline used in glows */
+}
+
+/* 2️⃣ Global styles – remove data‑theme selectors, use the new root vars */
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* 3️⃣ Asset cards – drop‑shadow + white outline */
+.asset-card {
+  background: var(--bg);
+  border: 1px solid var(--outline);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.08);
+}
+
+/* 4️⃣ Page header badge – subtle white glow */
+.page-header h2 {
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+}
+
+/* 5️⃣ Model‑viewer background – dark gradient with slight glow */
+model-viewer {
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+}
+
+/* 6️⃣ PDF wrapper border – faint white */
+.media-card .pdf-wrap {
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* 7️⃣ FPS overlay – white glow */
+.fps-overlay {
+  background: rgba(255,255,255,0.92);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* 8️⃣ Notification – white outline & glow */
+.notification {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.notification-success { background: var(--muted); }
+.notification-error   { background: #ff4d4d; }
+.notification-info    { background: var(--accent); }
+
+/* 9️⃣ Button – white outline, subtle drop‑shadow */
+.btn-primary {
+  background: var(--accent);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 2px 4px rgba(255,255,255,0.08);
+}
+
+/* 10️⃣ Offline banner – white outline glow */
+.offline-banner {
+  background: #f59e0b;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
 }

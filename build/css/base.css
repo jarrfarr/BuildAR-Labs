@@ -109,8 +109,21 @@ a:hover {
   transition: transform 0.12s ease, width 0.12s ease, height 0.12s ease, opacity 0.12s ease, background 0.12s ease;
 }
 
+/* ... existing code ... */
+
+/* Remove data‑theme selector – dark is default now */
 @media (prefers-reduced-motion: reduce) {
   #custom-cursor { transition: none; }
 }
 
-[data-theme="dark"] #custom-cursor { border-color: rgba(255,255,255,0.12); box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
+/* Optional: ensure .page-header .lead uses the text colour */
+.page-header .lead {
+  color: var(--text);   /* replaces rgba(17,17,17,0.8) */
+}
+
+/* ----------------------------------------------------------- */
+/*  If you want to remove the old selector entirely, simply delete: */
+/*  [data-theme="dark"] #custom-cursor { ... } */
+/* ----------------------------------------------------------- */
+
+/* ... rest of the file ... */

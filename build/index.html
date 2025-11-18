@@ -3,28 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BuildLab Offline App</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="manifest" href="manifest.json" />
-    <script defer src="js/main.js"></script>
+    <title>Siga Majvest 200 - BuildLab 360</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="main.js"></script>
   </head>
-
   <body>
-    <header>
-      <h1>BuildLab 360</h1>
+    <header class="header">
+      <h1>Siga Majvest 200</h1>
       <nav>
-        <a href="../index.html">Home</a>
-        <a href="./pages/siga-majvest_200.html">Siga Majvest 200</a>
+        <a href="index.html">Overview</a>
+        <a href="#details">Details</a>
+        <a href="#videos">Videos</a>
+        <a href="#downloads">Downloads</a>
       </nav>
     </header>
 
-    <main>
-      <h2>Welcome to BuildLab 360</h2>
-      <p>Offline-capable site for WRB systems, details, and guides.</p>
+    <main class="content">
+      <article>
+        <h2>Overview</h2>
+        <p>
+          SIGA Majvest 200 is a premium weather-resistive barrier designed to provide long-term protection against wind-driven rain and air infiltration.
+        </p>
+
+        <section id="details">
+          <h3>Technical Details</h3>
+          <table>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>Water Vapor Permeability</td><td>37 perms</td></tr>
+            <tr><td>Roll Size</td><td>4.9 ft × 164 ft</td></tr>
+            <tr><td>Color</td><td>Black</td></tr>
+            <tr><td>Use</td><td>Exterior WRB</td></tr>
+          </table>
+        </section>
+
+        <section id="videos">
+          <h3>Installation Videos</h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/E8hrGxwhv9I" title="Siga Majvest Installation" frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section id="downloads">
+          <h3>Downloads</h3>
+          <ul>
+            <li><a href="#">Technical Data Sheet (PDF)</a></li>
+            <li><a href="#">Installation Guide (PDF)</a></li>
+            <li><a href="#">Warranty Information (PDF)</a></li>
+          </ul>
+        </section>
+      </article>
     </main>
 
-    <footer>
+    <aside class="toc">
+      <h3>Table of Contents</h3>
+      <ul>
+        <li><a href="#details">Technical Details</a></li>
+        <li><a href="#videos">Installation Videos</a></li>
+        <li><a href="#downloads">Downloads</a></li>
+      </ul>
+    </aside>
+
+    <footer class="footer">
       <p>© 2025 BuildLab 360</p>
+      <a href="settings.html">Settings</a>
     </footer>
   </body>
 </html>

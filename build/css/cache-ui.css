@@ -1,0 +1,252 @@
+/* Cache Button Styles */
+.cache-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--accent, #0078ff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 120, 255, 0.2);
+}
+
+.cache-page-btn:hover:not(:disabled) {
+  background: var(--accent-hover, #0066dd);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 120, 255, 0.3);
+}
+
+.cache-page-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 120, 255, 0.2);
+}
+
+.cache-page-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cache-page-btn svg {
+  flex-shrink: 0;
+}
+
+/* Cached state */
+.cache-page-btn.cached {
+  background: #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.cache-page-btn.cached:hover:not(:disabled) {
+  background: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Loading state */
+.cache-page-btn.loading {
+  pointer-events: none;
+}
+
+.cache-page-btn .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px 24px;
+  background: #1f2937;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10000;
+  max-width: 400px;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.notification-success {
+  background: #10b981;
+}
+
+.notification-error {
+  background: #ef4444;
+}
+
+.notification-info {
+  background: #0078ff;
+}
+
+/* Page Header with Cache Button */
+.page-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.page-header {
+  position: relative;
+}
+
+/* Cache Status Indicator */
+.cache-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cache-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.cache-status-dot.offline {
+  background: #ef4444;
+  animation: none;
+}
+
+/* Offline indicator banner */
+.offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #f59e0b;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.offline-banner.show {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cache-page-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .notification {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  .page-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cache-page-btn {
+    justify-content: center;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .notification {
+  background: #374151;
+}
+
+[data-theme="dark"] .notification-success {
+  background: #059669;
+}
+
+[data-theme="dark"] .notification-error {
+  background: #dc2626;
+}
+
+[data-theme="dark"] .notification-info {
+  background: #0066dd;
+}
+
+[data-theme="dark"] .cache-status {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Small cache button variant */
+.cache-page-btn.small {
+  padding: 8px 14px;
+  font-size: 13px;
+  gap: 6px;
+}
+
+.cache-page-btn.small svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Cache section in content pages */
+.cache-section {
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(0, 120, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 120, 255, 0.1);
+}
+
+.cache-section h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.cache-section p {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+}
+
+[data-theme="dark"] .cache-section {
+  background: rgba(0, 120, 255, 0.08);
+  border-color: rgba(0, 120, 255, 0.15);
+}
