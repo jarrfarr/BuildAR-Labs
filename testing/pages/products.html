@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Installation Guides - Builder's Offline Guide</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+</head>
+<body>
+    <div id="page-container">
+        <header>
+            <nav id="nav-bar">
+                <div class="nav-logo">
+                    <h1>Builder's Guide</h1>
+                </div>
+                <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                </ul>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                <h1>Product Installation Guides</h1>
+        <p>Select a guide below to view installation instructions, download the content, or remove it from offline storage.</p>
+
+        <div id="guides-list" class="guides-list">
+            <p>Loading guides...</p>
+        </div>
+            </div>
+        </main>
+    <script src="../js/app.js"></script>
+    <script>
+    // Page navigation for multi-page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update active nav
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        const activeLink = document.querySelector('a[href="products.html"]');
+        if (activeLink) activeLink.classList.add('active');
+
+        // Load list of persisted guides
+        loadGuidesList();
+    });
+
+    async function loadGuidesList() {
+        const listDiv = document.getElementById('guides-list');
+        const persistedGuides = await cache.getPersistedPages();
+
+        let html = '<div class="guide-grid">';
+
+        // Always show available guides
+        const availableGuides = [
+            { id: 'product-page1', title: 'Heavy Duty Vapor Barrier VB-3000', description: 'Professional-grade vapor barrier for commercial construction' }
+        ];
+
+        availableGuides.forEach(guide => {
+            const persisted = persistedGuides.some(pg => pg.id === guide.id);
+            const viewBtnText = persisted ? 'View' : 'Preview';
+            const downloadBtnText = persisted ? 'Download' : 'Cache First';
+            html += `
+                <div class="guide-item">
+                    <h3>${guide.title}</h3>
+                    <p>${guide.description}</p>
+                    <div class="guide-actions">
+                        <button onclick="viewGuide('${guide.id}')" class="btn-small">View</button>
+                        ${persisted ? `<button onclick="downloadGuide('${guide.id}')" class="btn-small">Download</button>
+                        <button onclick="removeGuide('${guide.id}')" class="btn-danger-small">Remove</button>` : '<button onclick="cacheGuide(\'' + guide.id + '\')" class="btn-small">Cache for Offline</button>'}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Show persisted guides not in available list
+        persistedGuides.filter(guide => !availableGuides.some(ag => ag.id === guide.id)).forEach(guide => {
+            html += `
+                <div class="guide-item">
+                    <h3>${guide.id === 'product-page1' ? 'ABC123 Installation' : guide.id === 'install' ? 'Model Viewer' : guide.id}</h3>
+                    <p>Installation guide for ${guide.id}</p>
+                    <div class="guide-actions">
+                        <button onclick="viewGuide('${guide.id}')" class="btn-small">View</button>
+                        <button onclick="downloadGuide('${guide.id}')" class="btn-small">Download</button>
+                        <button onclick="removeGuide('${guide.id}')" class="btn-danger-small">Remove</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        if (availableGuides.length === 0 && persistedGuides.length === 0) html += '<p>No guides available.</p>';
+        html += '</div>';
+
+        listDiv.innerHTML = html;
+    }
+
+    function viewGuide(guideId) {
+        if (guideId === 'product-page1') {
+            window.location.href = 'product-page1.html';
+        } else if (guideId === 'install') {
+            window.location.href = 'install.html';
+        } else {
+            alert('Guide page not found.');
+        }
+    }
+
+    async function downloadGuide(guideId) {
+        // Download the guide content as JSON
+        const cachedPages = await cache.getAllArticles();
+        const guideContent = cachedPages.find(page => page.id === guideId);
+        if (guideContent) {
+            const dataStr = JSON.stringify(guideContent, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', `${guideId}-guide.json`);
+            linkElement.click();
+        } else {
+            alert('Guide content not found.');
+        }
+    }
+
+    async function cacheGuide(guideId) {
+        if (guideId === 'product-page1') {
+            if (cache && cache.storePersistedPage) {
+                try {
+                    await cache.storePersistedPage('product-page1');
+                    alert('Guide cached for offline use!');
+                    loadGuidesList();
+                } catch (e) {
+                    alert('Error caching guide: ' + e.message);
+                }
+            } else {
+                alert('Cache not available.');
+            }
+        } else {
+            alert('Caching not supported for this guide.');
+        }
+    }
+
+    async function removeGuide(guideId) {
+        if (confirm('Remove this guide from offline storage? You can add it back from Settings.')) {
+            await cache.removePersistedPage(guideId);
+            loadGuidesList();
+            alert('Guide removed from offline storage.');
+        }
+    }
+    </script>
+</body>
+</html>

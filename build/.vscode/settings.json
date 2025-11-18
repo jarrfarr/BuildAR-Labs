@@ -1,0 +1,6 @@
+{
+  "liveServer.settings.headers": {
+    "Cache-Control": "max-age=0, must-revalidate"
+  },
+  "liveServer.settings.port": 5501
+}

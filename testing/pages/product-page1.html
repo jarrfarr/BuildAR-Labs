@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heavy Duty Vapor Barrier Installation - Builder's Offline Guide</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+<body>
+    <div id="page-container">
+        <header>
+            <nav id="nav-bar">
+                <div class="nav-logo">
+                    <h1>Builder's Guide</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+
+        <main class="page-layout">
+            <div class="content">
+            <!-- Modular Content Blocks - Easy to Edit/Add/Remove -->
+
+            <!-- Header Block -->
+            <div class="block" data-type="header">
+                <h1 data-edit="title">Heavy Duty Vapor Barrier System</h1>
+                <p data-edit="subtitle">Model VB-3000 - Professional-grade vapor barrier for commercial construction and renovation projects.</p>
+            </div>
+
+            <!-- Specs Block -->
+            <div class="block" data-type="specs">
+                <h2 data-edit="heading">Technical Specifications</h2>
+                <div class="specs-table" data-edit="content">
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Material:</strong></div>
+                        <div class="spec-value">6mil reinforced polyethylene film with aluminum foil backing</div>
+                    </div>
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Dimensions:</strong></div>
+                        <div class="spec-value">10' x 100' rolls, custom cut available</div>
+                    </div>
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Perm Rating:</strong></div>
+                        <div class="spec-value">0.05 perms (Class I vapor retarder)</div>
+                    </div>
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Temperature Range:</strong></div>
+                        <div class="spec-value">-50°F to 200°F</div>
+                    </div>
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Installation:</strong></div>
+                        <div class="spec-value">Mechanical fasteners + adhesive tape</div>
+                    </div>
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Warranty:</strong></div>
+                        <div class="spec-value">5 years against UV degradation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Viewer Block -->
+            <div class="block" data-type="model-viewer">
+                <h2 data-edit="heading">Interactive 3D Model</h2>
+                <div class="step-card">
+                    <model-viewer
+                        src="../assets/models/model.glb"
+                        alt="Heavy Duty Vapor Barrier - Interactive 3D Model"
+                        camera-controls
+                        auto-rotate
+                        ar
+                        shadow-intensity="1"
+                        interaction-policy="allow-when-focused"
+                        style="width: 100%; height: 600px; background-color: transparent; --viewer-space-bg-color: transparent; border-radius: 15px;">
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="background-overlay"></div>
+                        </div>
+                        <button slot="ar-button" id="main-ar-button">
+                            View in Augmented Reality
+                        </button>
+                        <div class="model-controls" slot="controls">
+                            <button class="model-control-btn" data-control="zoom-in">+</button>
+                            <button class="model-control-btn" data-control="zoom-out">-</button>
+                            <button class="model-control-btn" data-control="reset">Reset</button>
+                        </div>
+                    </model-viewer>
+                </div>
+            </div>
+
+            <!-- Code Example Block -->
+            <div class="block card-block" data-type="code">
+                <h3>Implementation Code Example</h3>
+                <p>Copy this code to embed a 3D model viewer in your pages:</p>
+                <pre><code><script src="modelviewer.js" type="module"></script>
+<model-viewer src="model.glb" ar environment-image="neutral" shadow-intensity="1" camera-controls touch-action="pan-y" style="width: 100%; height: 70vh;"></model-viewer></code></pre>
+            </div>
+
+            <!-- Safety Card -->
+            <div class="block card-block safety" data-type="card" data-card="safety">
+                <h3 data-edit="heading">Safety Precautions</h3>
+                <p data-edit="content">Always wear appropriate PPE. Work in well-ventilated areas. Follow OSHA guidelines for ladder safety and overhead work.</p>
+            </div>
+
+            <!-- Installation Steps Block -->
+            <div class="block" data-type="steps">
+                <h2 data-edit="heading">Installation Instructions</h2>
+                <div class="steps-container">
+                    <!-- Step Cards -->
+                    <div class="step-card">
+                        <h3>Step 1: Surface Preparation</h3>
+                        <p data-edit="step-1-content">Clean and dry the application surface. Remove any dust, grease, or contaminants. Ensure temperature is above 40°F during installation.</p>
+                        <div class="block card-block critical" data-type="card" data-card="critical">
+                            <p data-edit="step-1-warning"><strong>Critical:</strong> Surface must be clean and free of frost for proper adhesion.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <h3>Step 2: Material Layout</h3>
+                        <p data-edit="step-2-content">Unroll the vapor barrier horizontally, allowing 6" vertical overlaps and 12" horizontal overlaps at seams. Keep material 2" above finished floor level.</p>
+                        <div class="block card-block tip" data-type="card" data-card="tip">
+                            <p data-edit="step-2-tip"><strong>Pro Tip:</strong> Work from top to bottom to prevent contamination.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <h3>Step 3: Fastening</h3>
+                        <p data-edit="step-3-content">Fasten every 12" horizontally and 8" vertically using corrosion-resistant staples or screws. Ensure tight but not over-tightened attachment.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <h3>Step 4: Seaming</h3>
+                        <p data-edit="step-4-content">Apply manufacturer-approved seam tape over all overlaps. Press firmly and smooth out air bubbles. Allow 24 hours for full cure before framing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools & Materials Block -->
+            <!-- Specs Block -->
+            <div class="block" data-type="specs">
+                <h2 data-edit="heading">Technical Specifications</h2>
+                <div class="specs-table" data-edit="content">
+                    <div class="spec-row">
+                        <div class="spec-property"><strong>Required Tools:</strong></div>
+                        <div class="spec-value">6mil reinforced polyethylene film with aluminum foil backing</div>
+                    </div>
+                    
+                    0<div class="spec-row">
+                        <div class="spec-property"><strong>Required Tools:</strong></div>
+                        <div class="spec-value">6mil reinforced polyethylene film with aluminum foil backing</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Block -->
+            <div class="block gallery-block" data-type="gallery">
+                <h2 data-edit="heading">Image Preview</h2>
+                <div class="gallery-container">
+                    <div class="gallery-item">
+                        <img src="example.png" alt="Product Preview Image" loading="lazy">
+                        <p data-edit="image-1-caption">Product image preview with rounded styling</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PDF Document Block -->
+            <div class="block document-block" data-type="pdf-viewer">
+                <h2 data-edit="heading">Technical Documentation</h2>
+                <div class="documents-container">
+                    <div class="document-item">
+                        <h3 data-edit="doc-1-title">Product Specification Sheet</h3>
+                        <p data-edit="doc-1-desc">Detailed technical specifications and performance data.</p>
+                        <a href="vb-3000-spec-sheet.pdf" class="btn-secondary" target="_blank" data-edit="doc-1-link">View PDF</a>
+                    </div>
+                    <div class="document-item">
+                        <h3 data-edit="doc-2-title">Installation Manual</h3>
+                        <p data-edit="doc-2-desc">Complete step-by-step installation instructions with diagrams.</p>
+                        <a href="vb-3000-install-manual.pdf" class="btn-secondary" target="_blank" data-edit="doc-2-link">View PDF</a>
+                    </div>
+                    <div class="document-item">
+                        <h3 data-edit="doc-3-title">Safety Data Sheet</h3>
+                        <p data-edit="doc-3-desc">Material safety information and handling guidelines.</p>
+                        <a href="vb-3000-safety-datasheet.pdf" class="btn-secondary" target="_blank" data-edit="doc-3-link">View PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Block (Placeholder) -->
+            <!--
+            <div class="block video-block" data-type="video">
+                <h2 data-edit="heading">Installation Video</h2>
+                <div class="video-container">
+                    <video controls poster="video-thumbnail.jpg" data-edit="video-src">
+                        <source src="installation-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p data-edit="video-description">Watch the complete installation process demonstration.</p>
+                </div>
+            </div>
+            -->
+            </div>
+
+            <nav class="sidebar" aria-label="Product sections">
+                <button class="sidebar-toggle" aria-expanded="true">Contents</button>
+                <ul>
+                    <li><a href="#specs">Tech Specs</a></li>
+                    <li><a href="#model-viewer">3D Model</a></li>
+                    <li><a href="#safety">Safety</a></li>
+                    <li><a href="#steps">Installation</a></li>
+                    <li><a href="#lists">Tools & Materials</a></li>
+                    <li><a href="#gallery">Cross-Sections</a></li>
+                    <li><a href="#pdf-viewer">Documentation</a></li>
+                </ul>
+            </nav>
+        </main>
+
+        <div class="cache-section">
+            <button id="cache-page" class="btn-primary">Cache This Installation Guide for Offline Use</button>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 Builder's Offline Guide. All guides cached locally for instant access.</p>
+        </footer>
+    </div>
+
+    <script src="../js/app.js"></script>
+
+    <script>
+    // Smooth scroll for anchors and active link highlighting
+    (function () {
+      const nav = document.querySelector(".sidebar");
+      const links = nav ? Array.from(nav.querySelectorAll("a")) : [];
+      const sections = links.map((a) =>
+        document.getElementById(a.getAttribute("href").slice(1))
+      );
+
+      function onScroll() {
+        const y = window.scrollY + 120; // offset for header
+        let activeIndex = -1;
+        sections.forEach((sec, i) => {
+          if (!sec) return;
+          if (sec.offsetTop <= y) activeIndex = i;
+        });
+        links.forEach((a, i) =>
+          a.classList.toggle("active", i === activeIndex)
+        );
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Smooth scrolling
+      links.forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const id = a.getAttribute("href").slice(1);
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      // Sidebar toggle for small screens
+      const toggle = document.querySelector(".sidebar-toggle");
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          const expanded = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!expanded));
+          document
+            .querySelector(".sidebar")
+            .classList.toggle("open", !expanded);
+        });
+      }
+
+      // Mobile navigation toggle
+      const navToggle = document.querySelector(".nav-toggle");
+      if (navToggle) {
+        navToggle.addEventListener("click", () => {
+          document.querySelector(".nav-links").classList.toggle("open");
+        });
+      }
+    })();
+    </script>
+
+    <script>
+    function toggleRotation() {
+        const modelViewer = document.querySelector('.model-viewer-container model-viewer');
+        if (modelViewer) {
+            modelViewer.setAttribute('auto-rotate', modelViewer.getAttribute('auto-rotate') === '' ? 'false' : '');
+        }
+    }
+
+    function resetView() {
+        const modelViewer = document.querySelector('.model-viewer-container model-viewer');
+        if (modelViewer && modelViewer.resetView) {
+            modelViewer.resetView();
+        }
+    }
+
+    function downloadPDF(button) {
+        const url = button.getAttribute('data-url');
+        if (url) {
+            // Create a temporary link and trigger download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = url.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Show feedback
+            button.textContent = 'Downloaded!';
+            setTimeout(() => {
+                button.innerHTML = 'Download';
+            }, 2000);
+        }
+    }
+
+    // Page navigation for multi-page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update active nav
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        const activeLink = document.querySelector('a[href="product-page1.html"]');
+        if (activeLink) activeLink.classList.add('active');
+
+        // Auto-cache if enabled
+        autoCachePage();
+
+        // Cache button
+        document.getElementById('cache-page').addEventListener('click', async function() {
+            if (cache && cache.storePersistedPage) {
+                try {
+                    await cache.storePersistedPage('product-page1');
+                    alert('Guide cached for offline use!');
+                    this.disabled = true;
+                    this.textContent = 'Cached';
+                } catch (e) {
+                    alert('Error caching guide: ' + e.message);
+                }
+            } else {
+                alert('Cache not available.');
+            }
+        });
+    });
+
+    async function autoCachePage() {
+        const autoCacheEnabled = localStorage.getItem('autoCacheEnabled') === 'true';
+        if (autoCacheEnabled && cache && cache.storePersistedPage) {
+            try {
+                await cache.storePersistedPage('product-page1');
+                console.log('Page auto-cached for offline use');
+                // Update cache button state
+                const cacheButton = document.getElementById('cache-page');
+                if (cacheButton) {
+                    cacheButton.disabled = true;
+                    cacheButton.textContent = 'Cached';
+                }
+            } catch (e) {
+                console.log('Auto-cache failed:', e.message);
+            }
+        }
+    }
+    </script>
+</body>
+</html>

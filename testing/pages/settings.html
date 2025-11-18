@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Builder's Offline Guide</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+</head>
+<body>
+    <header>
+        <nav id="nav-bar">
+            <div class="nav-logo">
+                <h1>Builder's Guide</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Settings</h1>
+        <p>Customize your experience and manage offline guides and storage.</p>
+
+
+
+        <section class="settings-section">
+            <h3>Persisted Guides</h3>
+            <div id="pages-list" class="pages-list">
+                <p>Loading cached guides...</p>
+            </div>
+            <button id="refresh-pages" class="btn-custom-primary">Refresh List</button>
+        </section>
+
+
+
+        <section class="settings-section">
+            <h3>Offline Mode</h3>
+            <label class="toggle-switch" style="margin-bottom: 10px; display: inline-block;">
+                <input type="checkbox" id="offline-mode-toggle">
+                <span class="slider"></span>
+            </label>
+            <span style="margin-left: 10px; color: #ffffff;">Enable Offline Mode</span><br>
+            <span style="font-size: 0.9em; opacity: 0.8; margin-bottom: 15px; display: block;">Persistent cache app files (CSS, fonts, HTML pages)</span>
+            <button id="cache-app-files" class="btn-custom-green">Cache App Files for Offline</button>
+            <div id="offline-status" style="margin-top: 10px;"></div>
+        </section>
+
+        <section class="settings-section">
+            <h3>Storage & Cache Analytics</h3>
+            <div class="specs-table" data-edit="storage-analysis">
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Offline Mode Status:</strong></div>
+                    <div class="spec-value" id="offline-status-display">Checking...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>App Files Cached:</strong></div>
+                    <div class="spec-value" id="app-files-cached">Loading...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Guides Stored:</strong></div>
+                    <div class="spec-value" id="guides-stored">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Assets Cached:</strong></div>
+                    <div class="spec-value" id="assets-cached">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Persistently Cached:</strong></div>
+                    <div class="spec-value" id="persistently-cached">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Product Pages Downloaded:</strong></div>
+                    <div class="spec-value" id="pages-downloaded">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>3D Models:</strong></div>
+                    <div class="spec-value" id="models-count">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Videos:</strong></div>
+                    <div class="spec-value" id="videos-count">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>PDFs:</strong></div>
+                    <div class="spec-value" id="pdfs-count">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>CSS Files:</strong></div>
+                    <div class="spec-value" id="css-files">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>JavaScript Files:</strong></div>
+                    <div class="spec-value" id="js-files">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>HTML Pages:</strong></div>
+                    <div class="spec-value" id="html-files">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Fonts:</strong></div>
+                    <div class="spec-value" id="fonts-files">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Total Storage Used:</strong></div>
+                    <div class="spec-value" id="total-storage">Calculating...</div>
+                </div>
+                <div class="spec-row">
+                    <div class="spec-property"><strong>Cache Performance:</strong></div>
+                    <div class="spec-value" id="cache-performance">Analyzing...</div>
+                </div>
+            </div>
+            <button id="refresh-storage" class="btn-custom-blue" style="margin-top: 15px;">Refresh Storage Analysis</button>
+        </section>
+
+        <section class="settings-section">
+            <h3>PWA Installation</h3>
+            <p>Install this app for offline access without needing to visit the website.</p>
+            <button id="install-pwa" class="btn-custom-primary" style="display: none;">Install App for Offline Use</button>
+            <div id="install-status">Checking installation status...</div>
+        </section>
+
+        <section class="settings-section">
+            <h3>Actions</h3>
+            <button id="clear-cache" class="btn-custom-danger">Clear All Cache</button>
+            <button id="export-data" class="btn-custom-blue">Export Data</button>
+        </section>
+
+        <section class="settings-section">
+            <h3>Performance Settings</h3>
+            <div style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 15px;">
+                <div style="flex: 1;">
+                    <div class="toggle-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="auto-cache-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="toggle-text">
+                            <span class="toggle-label">Auto Cache</span>
+                            <span class="toggle-desc">Automatically cache product pages when loaded</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="toggle-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="fps-counter-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="toggle-text">
+                            <span class="toggle-label">FPS Counter</span>
+                            <span class="toggle-desc">Enable performance monitoring on model viewers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="../js/app.js"></script>
+    <script>
+    // Mobile navigation toggle
+    const navToggle = document.querySelector(".nav-toggle");
+    if (navToggle) {
+        navToggle.addEventListener("click", () => {
+            document.querySelector(".nav-links").classList.toggle("open");
+        });
+    }
+
+    // Page navigation for multi-page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update active nav
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        const activeLink = document.querySelector('a[href="settings.html"]');
+        if (activeLink) activeLink.classList.add('active');
+    });
+
+    // PWA Installation
+    let deferredPrompt;
+    const installButton = document.getElementById('install-pwa');
+    const installStatus = document.getElementById('install-status');
+
+    // **Option 1: Show install prompt immediately when the page loads** (current implementation)
+    // Note: This is quite aggressive and may annoy users. Consider Option 2 below.
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('beforeinstallprompt fired - showing install prompt automatically');
+        e.preventDefault();
+        deferredPrompt = e;
+        installStatus.textContent = 'App installation prompt will appear shortly...';
+
+        // Automatically show the install prompt after page loads
+        setTimeout(() => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                        installStatus.textContent = 'App installed successfully!';
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                        installStatus.textContent = 'Installation cancelled. You can try again later.';
+                        installButton.style.display = 'block'; // Show manual button as fallback
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }, 1000); // Small delay to ensure the page is fully loaded
+    });
+
+    // **Option 2: Show install prompt after user engagement** (recommended approach)
+    // Uncomment this and comment out Option 1 for a less aggressive approach
+    /*
+    let userEngaged = false;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('beforeinstallprompt fired - waiting for user engagement');
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'block';
+        installStatus.textContent = 'Tap install to add this app to your home screen!';
+    });
+
+    // Show prompt after user has been scrolling/interacting with the page
+    document.addEventListener('scroll', () => {
+        userEngaged = true;
+    });
+
+    document.addEventListener('click', () => {
+        userEngaged = true;
+    });
+
+    // Show prompt after user has engaged and waited a bit
+    setTimeout(() => {
+        if (userEngaged && deferredPrompt && !deferredPrompt.shown) {
+            console.log('Showing delayed install prompt after user engagement');
+            deferredPrompt.prompt();
+            deferredPrompt.shown = true;
+        }
+    }, 15000); // Show after 15 seconds if user is engaged
+    */
+
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('app was installed');
+        installButton.style.display = 'none';
+        installStatus.textContent = 'App installed successfully!';
+    });
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+            if (registrations.length > 0) {
+                console.log('SW registered');
+            } else {
+                installStatus.textContent = 'Service worker not active.';
+            }
+        });
+    } else {
+        installStatus.textContent = 'PWA not supported in this browser.';
+    }
+
+    installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+                installStatus.textContent = 'Installing...';
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        }
+    });
+
+    // Settings page scripts
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPagesList();
+        loadStorageInfo();
+        loadDetailedStorageInfo();
+        loadSettings();
+
+        document.getElementById('refresh-pages').addEventListener('click', loadPagesList);
+        document.getElementById('refresh-storage').addEventListener('click', loadDetailedStorageInfo);
+        document.getElementById('clear-cache').addEventListener('click', clearAllCache);
+        document.getElementById('export-data').addEventListener('click', exportData);
+        document.getElementById('cache-app-files').addEventListener('click', cacheAppFiles);
+        document.getElementById('offline-mode-toggle').addEventListener('change', saveSettings);
+        document.getElementById('auto-cache-toggle').addEventListener('change', saveSettings);
+        document.getElementById('fps-counter-toggle').addEventListener('change', saveSettings);
+    });
+
+    function loadSettings() {
+        const offlineToggle = document.getElementById('offline-mode-toggle');
+        const autoCacheToggle = document.getElementById('auto-cache-toggle');
+        const fpsToggle = document.getElementById('fps-counter-toggle');
+
+        offlineToggle.checked = localStorage.getItem('offlineModeEnabled') === 'true';
+        autoCacheToggle.checked = localStorage.getItem('autoCacheEnabled') === 'true';
+        fpsToggle.checked = localStorage.getItem('fpsCounterEnabled') === 'true';
+    }
+
+    function saveSettings() {
+        const offlineToggle = document.getElementById('offline-mode-toggle');
+        const autoCacheToggle = document.getElementById('auto-cache-toggle');
+        const fpsToggle = document.getElementById('fps-counter-toggle');
+
+        localStorage.setItem('offlineModeEnabled', offlineToggle.checked);
+        localStorage.setItem('autoCacheEnabled', autoCacheToggle.checked);
+        localStorage.setItem('fpsCounterEnabled', fpsToggle.checked);
+    }
+
+    async function loadPagesList() {
+        const listDiv = document.getElementById('pages-list');
+        const persistedGuides = await cache.getPersistedPages();
+
+        let html = '<ul>';
+        persistedGuides.forEach(guide => {
+            html += `<li>${guide.id} (<small>${new Date(guide.timestamp).toLocaleDateString()}</small>) <button onclick="removeGuide('${guide.id}')" class="btn-small btn-danger">Remove</button></li>`;
+        });
+        if (persistedGuides.length === 0) html += '<li>No persisted guides yet</li>';
+        html += '</ul>';
+
+        listDiv.innerHTML = html;
+    }
+
+    async function loadStorageInfo() {
+        try {
+            // Get detailed analysis
+            const analysis = await cache.getDetailedStorageAnalysis();
+
+            // Check offline mode status
+            const offlineModeEnabled = localStorage.getItem('offlineModeEnabled') === 'true';
+            document.getElementById('offline-status-display').textContent = offlineModeEnabled ? 'Enabled' : 'Disabled';
+
+            // Populate all the table cells
+            document.getElementById('app-files-cached').textContent = `${Math.round(analysis.appTotalSize / 1024)} KB cached`;
+            document.getElementById('guides-stored').textContent = `${analysis.pagesDownloaded} guides stored (~${Math.round(analysis.pagesSize / 1024)} KB)`;
+            document.getElementById('assets-cached').textContent = `${Math.max(0, analysis.totalStorage - analysis.appTotalSize - analysis.pagesSize)} KB cached`;
+            document.getElementById('persistently-cached').textContent = '0 persistently cached guides'; // Placeholder
+
+            document.getElementById('pages-downloaded').textContent = `${analysis.pagesDownloaded} product pages downloaded (~${Math.round(analysis.pagesSize / 1024)} KB)`;
+            document.getElementById('models-count').textContent = `${analysis.modelsCount} 3D models (~${Math.round(analysis.modelsSize / 1024)} KB)`;
+            document.getElementById('videos-count').textContent = `${analysis.videosCount} videos (~${Math.round(analysis.videosSize / 1024)} KB)`;
+            document.getElementById('pdfs-count').textContent = `${analysis.pdfsCount} PDFs (~${Math.round(analysis.pdfsSize / 1024)} KB)`;
+
+            document.getElementById('css-files').textContent = `${Math.round(analysis.appBreakdown.css / 1024)} KB`;
+            document.getElementById('js-files').textContent = `${Math.round(analysis.appBreakdown.js / 1024)} KB`;
+            document.getElementById('html-files').textContent = `${Math.round(analysis.appBreakdown.html / 1024)} KB`;
+            document.getElementById('fonts-files').textContent = `${Math.round(analysis.appBreakdown.fonts / 1024)} KB`;
+
+            document.getElementById('total-storage').textContent = `${Math.round(analysis.totalStorage / 1024)} KB total storage used (${Math.round(analysis.totalStorage / 1024 / 1024 * 100) / 100} MB)`;
+
+            // Cache performance analysis
+            const totalAssets = await cache.getAllAssets();
+            const appFiles = totalAssets.filter(asset => asset.type === 'app-file');
+            const contentAssets = totalAssets.filter(asset => asset.type !== 'app-file');
+            const cacheEfficiency = totalAssets.length > 0 ? Math.round((appFiles.length / (appFiles.length + contentAssets.length)) * 100) : 0;
+            document.getElementById('cache-performance').textContent = `${cacheEfficiency}% offline ready`;
+        } catch (error) {
+            console.error('Error loading storage info:', error);
+            // Fallback to basic values
+            document.getElementById('offline-status-display').textContent = 'Unable to determine';
+            document.getElementById('app-files-cached').textContent = 'Unable to calculate';
+            document.getElementById('guides-stored').textContent = 'Unable to calculate';
+            document.getElementById('assets-cached').textContent = 'Unable to calculate';
+            document.getElementById('persistently-cached').textContent = 'Unable to calculate';
+            document.getElementById('pages-downloaded').textContent = 'Unable to calculate';
+            document.getElementById('models-count').textContent = 'Unable to calculate';
+            document.getElementById('videos-count').textContent = 'Unable to calculate';
+            document.getElementById('pdfs-count').textContent = 'Unable to calculate';
+            document.getElementById('css-files').textContent = 'Unable to calculate';
+            document.getElementById('js-files').textContent = 'Unable to calculate';
+            document.getElementById('html-files').textContent = 'Unable to calculate';
+            document.getElementById('fonts-files').textContent = 'Unable to calculate';
+            document.getElementById('total-storage').textContent = 'Unable to calculate';
+            document.getElementById('cache-performance').textContent = 'Unable to analyze';
+        }
+    }
+
+
+
+    async function removeGuide(pageId) {
+        if (confirm('Remove this guide from persisted list?')) {
+            await cache.removePersistedPage(pageId);
+            loadPagesList();
+            loadStorageInfo();
+        }
+    }
+
+    async function clearAllCache() {
+        if (confirm('Clear all cached data? This cannot be undone.')) {
+            await cache.db.transaction(['articles'], 'readwrite').objectStore('articles').clear();
+            await cache.db.transaction(['assets'], 'readwrite').objectStore('assets').clear();
+            await cache.db.transaction(['persistedPages'], 'readwrite').objectStore('persistedPages').clear();
+            localStorage.clear();
+            alert('All cache cleared!');
+            loadPagesList();
+            loadStorageInfo();
+        }
+    }
+
+    async function cacheAppFiles() {
+        const statusDiv = document.getElementById('offline-status');
+        statusDiv.textContent = 'Caching app files...';
+
+        try {
+            await cache.cacheAppFiles();
+            statusDiv.textContent = 'App files cached successfully for offline use!';
+        } catch (error) {
+            statusDiv.textContent = `Error caching app files: ${error.message}`;
+        }
+    }
+
+    async function loadDetailedStorageInfo() {
+        const infoDiv = document.getElementById('detailed-storage-info');
+        infoDiv.innerHTML = '<p>Analyzing detailed storage usage...</p>';
+
+        try {
+            const analysis = await cache.getDetailedStorageAnalysis();
+
+            infoDiv.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 10px 0; color: #ffffff;">App Storage Usage</h4>
+                    <p><strong>Total App Size:</strong> ${Math.round(analysis.appTotalSize / 1024)} KB</p>
+                    <ul style="margin: 5px 0; padding-left: 20px;">
+                        <li>CSS Files: ${Math.round(analysis.appBreakdown.css / 1024)} KB</li>
+                        <li>JavaScript Files: ${Math.round(analysis.appBreakdown.js / 1024)} KB</li>
+                        <li>HTML Pages: ${Math.round(analysis.appBreakdown.html / 1024)} KB</li>
+                        <li>Fonts: ${Math.round(analysis.appBreakdown.fonts / 1024)} KB</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h4 style="margin: 10px 0 10px 0; color: #ffffff;">Content Analysis</h4>
+                    <p><strong>${analysis.pagesDownloaded}</strong> product pages downloaded (~${Math.round(analysis.pagesSize / 1024)} KB)</p>
+                    <p><strong>${analysis.modelsCount}</strong> 3D models (~${Math.round(analysis.modelsSize / 1024)} KB)</p>
+                    <p><strong>${analysis.videosCount}</strong> videos (~${Math.round(analysis.videosSize / 1024)} KB)</p>
+                    <p><strong>${analysis.pdfsCount}</strong> PDFs (~${Math.round(analysis.pdfsSize / 1024)} KB)</p>
+                </div>
+
+                <div>
+                    <h4 style="margin: 15px 0 10px 0; color: #ffffff;">Storage Summary</h4>
+                    <p><strong>'${Math.round(analysis.totalStorage / 1024)} KB</strong> total storage used (${Math.round(analysis.totalStorage / 1024 / 1024 * 100) / 100} MB)</p>
+                </div>
+            `;
+        } catch (error) {
+            infoDiv.innerHTML = `<p style="color: #ff9696;">Error analyzing storage: ${error.message}</p>`;
+        }
+    }
+
+    function exportData() {
+        cache.getAllArticles().then(pages => {
+            const dataStr = JSON.stringify(pages, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportElement = document.createElement('a');
+            exportElement.setAttribute('href', dataUri);
+            exportElement.setAttribute('download', 'builders-guide-data.json');
+            exportElement.click();
+        });
+    }
+    </script>
+</body>
+</html>

@@ -303,15 +303,86 @@ async function wireCacheUi() {
   const sizeEl = document.getElementById("cache-size");
   const refreshBtn = document.getElementById("cache-refresh");
   const clearBtn = document.getElementById("cache-clear");
-  if (!sizeEl) return;
+  const downloadsManager = document.getElementById("downloads-manager");
+
+  // Downloads Manager - show per-page caches
+  async function updateDownloadsManager(cacheInfo) {
+    if (!downloadsManager) return;
+
+    const pageCaches = [
+      { name: 'Majvest 200 (Siga)', cacheName: 'buildlab-page-siga', pageId: 'siga', href: 'siga.html' },
+      { name: 'Majvest 200 (Install)', cacheName: 'buildlab-page-install', pageId: 'install', href: 'install.html' }
+    ];
+
+    let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+
+    for (const page of pageCaches) {
+      const cacheData = cacheInfo[page.cacheName];
+      const hasCache = cacheData && cacheData.entries > 0;
+      const size = hasCache ? formatBytes(cacheData.estimatedSize) : 'Not cached';
+
+      html += `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #ccc; border-radius: 8px;">
+          <div>
+            <strong>${page.name}</strong>
+            <div style="font-size: 12px; color: #666; margin-top: 4px;">${size} • ${hasCache ? cacheData.entries + ' files' : '0 files'}</div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <a href="${page.href}" class="btn-primary" style="padding: 8px 12px; font-size: 12px;">View</a>
+            <button class="btn-secondary purge-btn" data-cache="${page.cacheName}" ${!hasCache ? 'disabled' : ''} style="padding: 8px 12px; font-size: 12px; ${!hasCache ? 'opacity: 0.5;' : ''}">Purge</button>
+          </div>
+        </div>
+      `;
+    }
+
+    html += '</div>';
+    downloadsManager.innerHTML = html;
+
+    // Add purge button listeners
+    document.querySelectorAll('.purge-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const cacheName = btn.dataset.cache;
+        if (!confirm(`Purge cached assets for this page?`)) return;
+
+        try {
+          const swReg = await navigator.serviceWorker.ready;
+          const channel = new MessageChannel();
+
+          await new Promise((resolve, reject) => {
+            channel.port1.onmessage = (event) => {
+              const data = event.data;
+              if (data.success) {
+                resolve();
+              } else {
+                reject(new Error(data.error));
+              }
+            };
+
+            swReg.active.postMessage({ type: "CLEAR_CACHE", cacheName: cacheName }, [channel.port2]);
+            setTimeout(() => reject(new Error("Timeout")), 5000);
+          });
+
+          alert("Page cache purged successfully");
+          await refresh();
+        } catch (err) {
+          alert("Failed to purge cache: " + err.message);
+        }
+      });
+    });
+  }
+
+  if (!sizeEl && !downloadsManager) return;
 
   async function refresh() {
     if (!('serviceWorker' in navigator)) {
-      sizeEl.textContent = "Service Worker not supported";
+      if (sizeEl) sizeEl.textContent = "Service Worker not supported";
+      if (downloadsManager) downloadsManager.innerHTML = "<p>Service Worker not supported</p>";
       return;
     }
 
-    sizeEl.textContent = "calculating...";
+    if (sizeEl) sizeEl.textContent = "calculating...";
+    if (downloadsManager) downloadsManager.innerHTML = "<p>Loading cache information...</p>";
+
     try {
       const swReg = await navigator.serviceWorker.ready;
       const channel = new MessageChannel();
@@ -339,17 +410,19 @@ async function wireCacheUi() {
         totalEntries += cacheData.entries;
       }
 
-      sizeEl.textContent = `${formatBytes(totalSize)} (${totalEntries} files)`;
+      if (sizeEl) sizeEl.textContent = `${formatBytes(totalSize)} (${totalEntries} files)`;
+      if (downloadsManager) updateDownloadsManager(result);
     } catch (err) {
       console.warn("Failed to get cache info:", err);
-      sizeEl.textContent = "unknown";
+      if (sizeEl) sizeEl.textContent = "unknown";
+      if (downloadsManager) downloadsManager.innerHTML = "<p>Failed to load cache information</p>";
     }
   }
 
   if (refreshBtn) refreshBtn.addEventListener("click", refresh);
   if (clearBtn)
     clearBtn.addEventListener("click", async () => {
-      if (!confirm("Clear cached files?")) return;
+      if (!confirm("Clear ALL cached files? This includes auto-cached app files.")) return;
       if (!('serviceWorker' in navigator)) return;
 
       try {
@@ -372,7 +445,7 @@ async function wireCacheUi() {
           setTimeout(() => reject(new Error("Timeout")), 10000);
         });
 
-        alert("Cache cleared successfully");
+        alert("All cache cleared successfully");
         await refresh();
       } catch (err) {
         alert("Failed to clear cache: " + err.message);

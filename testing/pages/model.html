@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/modelviewer.js" type="module"></script>
+</head>
+<body>
+        <header>
+            <nav id="nav-bar">
+                <div class="nav-logo">
+                    <h1>Builder's Guide</h1>
+                </div>
+                <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                </ul>
+
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </header>
+
+    <div class="container">
+        <model-viewer src="../assets/models/model.glb" ar environment-image="neutral" poster="" shadow-intensity="1" camera-controls touch-action="pan-y" style="background-color: transparent; --viewer-space-bg-color: transparent; width: 100%; height: 70vh; border-radius: 35px;"></model-viewer>
+    </div>
+
+    <script>
+    // Mobile navigation toggle
+    const navToggle = document.querySelector(".nav-toggle");
+    if (navToggle) {
+        navToggle.addEventListener("click", () => {
+            document.querySelector(".nav-links").classList.toggle("open");
+        });
+    }
+
+    // Page navigation active link
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update active nav - highlight Products since this is accessed from there
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        const activeLink = document.querySelector('a[href="products.html"]');
+        if (activeLink) activeLink.classList.add('active');
+    });
+    </script>
+</body>
+</html>
