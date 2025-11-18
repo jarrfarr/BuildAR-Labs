@@ -1,44 +1,40 @@
 {
-  "name": "BuildLab 360 - Professional Construction Resources",
-  "short_name": "BuildLab 360",
-  "description": "Professional construction resources and technical documentation for building solutions",
-  "start_url": "/",
+  "name": "Builder's Offline Guide",
+  "short_name": "Builder Guide",
+  "description": "Comprehensive installation guides for on-site building with offline access",
+  "start_url": "./index.html",
   "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#1a1a1a",
   "orientation": "portrait-primary",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "scope": "/",
-  "lang": "en",
-  "categories": ["productivity", "business"],
-  "screenshots": [
-    {
-      "src": "assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "platform": "web",
-      "label": "Landing — wide",
-      "form_factor": "wide"
-    }
-  ],
+  "scope": "./",
   "icons": [
     {
-      "src": "assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iIzFhMWExYSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4MCIgZmlsbD0iI2ZmZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkI8L3RleHQ+PC9zdmc+",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAwIiBmaWxsPSIjZmZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkI8L3RleHQ+PC9zdmc+",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
-  "related_applications": [],
-  "prefer_related_applications": false
+  "categories": ["productivity", "business", "utilities"],
+  "features": [
+    "Offline Access",
+    "Cross Platform",
+    "Fast"
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTE5MCIgaGVpZ2h0PSI4MzUiIHZpZXdCb3g9IjAgMCAxMTkwIDgzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTE5MCIgaGVpZ2h0PSI4MzYiIGZpbGw9IiMwMDAwMDAiLz48cmVjdCB4PSIyMCIgeT0iMjAiIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAiIGZpbGw9IiMxYTFhMWEiIHJ4PSIxMCIvPjx0ZXh0IHg9IjMwIiB5PSI1MCIgZmlsbD0iI2ZmZmZmZmZiIgZm9udC1zaXplPSIyNCI+QnVpbGRlcidzIE9mZmxpbmUgUHVpZG</L3RleHQ+PHR5cHQgeD0iMzAiIHk9IjkwIiBmaWxsPSIjY2NjY2NjIiBmb250LXNpemU9IjE2Ij5PZmZsaW5lIGluc3RhbGwgZ3VpZGVzIGNvbXBhdGlibGU8L3RleHQ+PC9zdmc+",
+      "sizes": "1190x836",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr"
 }

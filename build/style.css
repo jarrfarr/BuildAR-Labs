@@ -637,13 +637,6 @@ a:hover {
 
 .pdf-toolbar .btn-small {
     padding: 6px 10px;
-    font-size: 0.8em;
-    border-radius: 6px;
-    background: rgba(100,200,255,0.1);
-    border: 1px solid rgba(100,200,255,0.3);
-}
-
-.pdf-toolbar .btn-small:hover {
     background: rgba(100,200,255,0.2);
     border-color: rgba(100,200,255,0.6);
 }

@@ -79,3 +79,28 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
+// Listen for messages from pages (e.g. request to pre-cache core assets)
+self.addEventListener('message', (event) => {
+  if (!event.data || !event.data.type) return;
+
+  if (event.data.type === 'CACHE_CORE') {
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(CORE_ASSETS);
+    }).then(() => {
+      // Respond back to sender if a MessagePort was provided
+      if (event.ports && event.ports[0]) {
+        event.ports[0].postMessage({ type: 'CACHE_COMPLETE' });
+      } else {
+        // Broadcast to all clients
+        self.clients.matchAll().then(clients => clients.forEach(c => c.postMessage({ type: 'CACHE_COMPLETE' })));
+      }
+    }).catch(err => {
+      if (event.ports && event.ports[0]) {
+        event.ports[0].postMessage({ type: 'CACHE_FAILED', error: err && err.message ? err.message : String(err) });
+      } else {
+        self.clients.matchAll().then(clients => clients.forEach(c => c.postMessage({ type: 'CACHE_FAILED', error: err && err.message ? err.message : String(err) })));
+      }
+    });
+  }
+});
+

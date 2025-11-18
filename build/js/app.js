@@ -234,6 +234,40 @@ if ('serviceWorker' in navigator) {
         })
         .catch(err => console.warn('SW registration failed:', err));
 
+        // Once the service worker is ready, request it to pre-cache core assets
+        navigator.serviceWorker.ready.then(async (registration) => {
+            try {
+                // Populate IndexedDB stores for persisted pages/assets (non-blocking)
+                if (window.cache && typeof window.cache.cacheAppFiles === 'function') {
+                    window.cache.cacheAppFiles().catch(e => console.warn('IndexedDB cacheAppFiles error', e));
+                }
+
+                // Send a message to the active service worker to cache CORE_ASSETS
+                if (registration.active) {
+                    const msgChannel = new MessageChannel();
+                    msgChannel.port1.onmessage = (ev) => {
+                        if (ev.data && ev.data.type === 'CACHE_COMPLETE') {
+                            document.dispatchEvent(new CustomEvent('pwa-cache-complete'));
+                            console.log('PWA core cache completed');
+                        } else if (ev.data && ev.data.type === 'CACHE_FAILED') {
+                            console.warn('PWA core cache failed', ev.data.error);
+                            document.dispatchEvent(new CustomEvent('pwa-cache-failed', { detail: ev.data.error }));
+                        }
+                    };
+                    registration.active.postMessage({ type: 'CACHE_CORE' }, [msgChannel.port2]);
+                } else if (navigator.serviceWorker.controller) {
+                    // Fallback to controller
+                    const msgChannel = new MessageChannel();
+                    msgChannel.port1.onmessage = (ev) => {
+                        if (ev.data && ev.data.type === 'CACHE_COMPLETE') document.dispatchEvent(new CustomEvent('pwa-cache-complete'));
+                    };
+                    navigator.serviceWorker.controller.postMessage({ type: 'CACHE_CORE' }, [msgChannel.port2]);
+                }
+            } catch (err) {
+                console.warn('Error requesting SW to cache core assets', err);
+            }
+        });
+
     // Capture beforeinstallprompt to allow custom install UI
     window.deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', (e) => {
