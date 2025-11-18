@@ -3,7 +3,7 @@ async function cachePageAssets() {
   if (!('serviceWorker' in navigator)) return;
 
   const urlsToCache = [
-    '../pages/siga-majvest_200.html',
+    '../pages/siga.html',
     '../assets/models/wall.glb',
     '../assets/models/model.glb',
     '../assets/videos/sample.mp4',

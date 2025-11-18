@@ -7,6 +7,9 @@
   --accent: #9aa0a6;         /* slate‑grey accent (used for borders, glows) */
   --muted: #00ffcc;          /* neon‑green for subtle UI cues */
   --outline: rgba(255,255,255,0.12);  /* faint white outline used in glows */
+  /* container separation for content areas */
+  --container-bg: rgba(255,255,255,0.03);
+  --container-border: rgba(255,255,255,0.06);
 }
 
 /* 2️⃣ Global styles – remove data‑theme selectors, use the new root vars */

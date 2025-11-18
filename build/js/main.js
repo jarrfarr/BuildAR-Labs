@@ -11,20 +11,101 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register(swPath)
       .then((reg) => {
-        console.log("Service Worker registered:", reg);
-        if (window.cacheManager) {
-          window.cacheManager.registration = reg;
-        }
+        console.log("Service Worker registered:", reg.scope);
+
+        // Listen for updates
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New version available, show update notification
+              showUpdateNotification(reg);
+            }
+          });
+        });
+
+        // Check for updates periodically
+        setInterval(() => {
+          reg.update().catch(err => console.warn('SW update check failed:', err));
+        }, 60 * 60 * 1000); // Check every hour
       })
-      .catch((err) => console.error("Service Worker failed:", err));
+      .catch((err) => console.error("Service Worker registration failed:", err));
   });
+}
+
+// ======================
+// Service Worker Update Notification
+// ======================
+function showUpdateNotification(registration) {
+  const updateToast = document.createElement('div');
+  updateToast.id = 'sw-update-toast';
+  updateToast.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10000;
+      cursor: pointer;
+      max-width: 300px;
+    ">
+      <p style="margin: 0 0 10px 0; font-weight: bold;">App Updated!</p>
+      <p style="margin: 0 0 15px 0; font-size: 14px;">A new version is available. Click to reload.</p>
+      <button id="update-now" style="
+        background: white;
+        color: var(--accent);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+      ">Update Now</button>
+      <button id="update-later" style="
+        background: transparent;
+        color: white;
+        border: 1px solid white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 8px;
+      ">Later</button>
+    </div>
+  `;
+
+  document.body.appendChild(updateToast);
+
+  document.getElementById('update-now').addEventListener('click', () => {
+    registration.waiting.postMessage({ action: 'skipWaiting' });
+    window.location.reload();
+  });
+
+  document.getElementById('update-later').addEventListener('click', () => {
+    updateToast.remove();
+  });
+
+// Auto-remove after 10 seconds
+  setTimeout(() => {
+    if (updateToast.parentNode) {
+      updateToast.remove();
+    }
+  }, 10000);
 }
 
 // ======================
 // Manual Page Caching Support
 // ======================
 async function cachePageAssets() {
-  if (!("serviceWorker" in navigator)) return;
+  if (!("serviceWorker" in navigator)) {
+    console.warn("Service Worker not supported");
+    return;
+  }
+
   const urlsToCache = [
     window.location.href,
     "../css/style.css",
@@ -34,21 +115,31 @@ async function cachePageAssets() {
     "../assets/videos/sample.mp4",
     "../assets/pdfs/siga-majvest_200-system_guidlines.pdf",
   ];
+
   try {
     const swReg = await navigator.serviceWorker.ready;
-    const messageChannel = new MessageChannel();
+    const channel = new MessageChannel();
+
     return new Promise((resolve, reject) => {
-      messageChannel.port1.onmessage = (event) => {
-        if (event.data.success) resolve(event.data.result);
-        else reject(event.data.error);
+      channel.port1.onmessage = (event) => {
+        const data = event.data;
+        if (data.success) {
+          resolve(data);
+        } else {
+          reject(new Error(data.error || "Caching failed"));
+        }
       };
-      swReg.active.postMessage(
-        { type: "CACHE_URLS", urls: urlsToCache },
-        [messageChannel.port2]
-      );
+
+      const target = swReg.active;
+      if (target) {
+        target.postMessage({ type: "CACHE_URLS", urls: urlsToCache }, [channel.port2]);
+      } else {
+        reject(new Error("No active service worker"));
+      }
     });
   } catch (err) {
     console.error("Cache operation failed:", err);
+    throw err;
   }
 }
 
@@ -215,22 +306,77 @@ async function wireCacheUi() {
   if (!sizeEl) return;
 
   async function refresh() {
+    if (!('serviceWorker' in navigator)) {
+      sizeEl.textContent = "Service Worker not supported";
+      return;
+    }
+
     sizeEl.textContent = "calculating...";
-    const bytes = await getCacheSizeBytes();
-    sizeEl.textContent = bytes === null ? "unknown" : formatBytes(bytes);
+    try {
+      const swReg = await navigator.serviceWorker.ready;
+      const channel = new MessageChannel();
+
+      const result = await new Promise((resolve, reject) => {
+        channel.port1.onmessage = (event) => {
+          const data = event.data;
+          if (data.success) {
+            resolve(data.cacheInfo);
+          } else {
+            reject(new Error(data.error));
+          }
+        };
+
+        swReg.active.postMessage({ type: "GET_CACHE_INFO" }, [channel.port2]);
+
+        // Timeout after 5 seconds
+        setTimeout(() => reject(new Error("Timeout")), 5000);
+      });
+
+      let totalSize = 0;
+      let totalEntries = 0;
+      for (const [cacheName, cacheData] of Object.entries(result)) {
+        totalSize += cacheData.estimatedSize;
+        totalEntries += cacheData.entries;
+      }
+
+      sizeEl.textContent = `${formatBytes(totalSize)} (${totalEntries} files)`;
+    } catch (err) {
+      console.warn("Failed to get cache info:", err);
+      sizeEl.textContent = "unknown";
+    }
   }
 
   if (refreshBtn) refreshBtn.addEventListener("click", refresh);
   if (clearBtn)
     clearBtn.addEventListener("click", async () => {
       if (!confirm("Clear cached files?")) return;
+      if (!('serviceWorker' in navigator)) return;
+
       try {
-        await caches.delete("buildlab-cache-v1");
-        alert("Cache cleared");
+        const swReg = await navigator.serviceWorker.ready;
+        const channel = new MessageChannel();
+
+        await new Promise((resolve, reject) => {
+          channel.port1.onmessage = (event) => {
+            const data = event.data;
+            if (data.success) {
+              resolve();
+            } else {
+              reject(new Error(data.error));
+            }
+          };
+
+          swReg.active.postMessage({ type: "CLEAR_CACHE" }, [channel.port2]);
+
+          // Timeout after 10 seconds
+          setTimeout(() => reject(new Error("Timeout")), 10000);
+        });
+
+        alert("Cache cleared successfully");
+        await refresh();
       } catch (err) {
-        alert("Failed to clear cache");
+        alert("Failed to clear cache: " + err.message);
       }
-      refresh();
     });
 
   refresh();
@@ -351,3 +497,46 @@ if (document.readyState === "loading") {
   autosizePdfs();
   window.addEventListener("resize", autosizePdfs);
 }
+
+// ======================
+// Page header pin (halfway) behavior
+// ======================
+function initHeaderPin() {
+  const header = document.querySelector("header");
+  const pageHeader = document.querySelector(".page-header");
+  if (!header || !pageHeader) return;
+
+  function setPinVar() {
+    const rect = header.getBoundingClientRect();
+    // Use half the header's height as the sticky top offset
+    const half = Math.round(rect.height / 2);
+    document.documentElement.style.setProperty("--header-pin-half", half + "px");
+  }
+
+  // Update small class when the element becomes sticky
+  function onScroll() {
+    const pinTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--header-pin-half")) || 44;
+    const phRect = pageHeader.getBoundingClientRect();
+    // If the top of the pageHeader is at or <= the pinTop, it's stuck
+    if (phRect.top <= pinTop) pageHeader.classList.add("stuck");
+    else pageHeader.classList.remove("stuck");
+  }
+
+  // Keep the var up to date on load/resize; use ResizeObserver if available
+  setPinVar();
+  window.addEventListener("resize", setPinVar);
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (window.ResizeObserver) {
+    try {
+      const ro = new ResizeObserver(setPinVar);
+      ro.observe(header);
+    } catch (e) {
+      // ignore
+    }
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initHeaderPin);
+} else initHeaderPin();

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ffffff">
+  <title>BuildLab 360</title>
+  <link rel="manifest" href="/build/manifest.json">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f7fbff}
+    .card{background:white;padding:28px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.06);max-width:720px;text-align:center}
+    a{color:#2563eb}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>BuildLab 360</h1>
+    <p>Root index for testing manifest & service worker registration.</p>
+    <p><a href="/build/manifest.json" target="_blank">Open manifest.json</a> · <a href="/build/service-worker.js" target="_blank">Open service-worker.js</a></p>
+    <p id="log" style="color:#666;font-size:0.9rem"></p>
+  </div>
+
+  <script>
+    (function(){
+      const logEl = document.getElementById('log');
+      function log(msg){
+        console.log(msg);
+        if(logEl) logEl.textContent = msg;
+      }
+
+      if('serviceWorker' in navigator){
+        window.addEventListener('load', async ()=>{
+          try{
+            // Register the service worker from /build/; adjust path if you move the file to root
+            const reg = await navigator.serviceWorker.register('/build/service-worker.js', {scope: '/'});
+            log('Service Worker registered: ' + reg.scope);
+
+            // Optional: listen for updates
+            reg.addEventListener('updatefound', ()=>{
+              log('Service Worker update found');
+            });
+
+          }catch(err){
+            console.error('SW registration failed:', err);
+            log('SW registration failed: ' + (err && err.message ? err.message : String(err)));
+          }
+        });
+      } else {
+        log('Service Worker not supported in this browser.');
+      }
+    })();
+  </script>
+</body>
+</html>

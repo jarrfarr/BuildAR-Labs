@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - BuildLab 360</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .offline-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            text-align: center;
+            background: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+        .retry-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .retry-btn:hover {
+            opacity: 0.9;
+        }
+        .cached-pages {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .cached-pages h3 {
+            margin-bottom: 15px;
+        }
+        .cached-pages ul {
+            list-style: none;
+            padding: 0;
+        }
+        .cached-pages li {
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cached-pages a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .cached-pages a:hover {
+            text-decoration: underline;
+        }
+        .cache-status {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📶</div>
+        <h1>You're Offline</h1>
+        <p>You appear to be offline or having trouble connecting to the network.</p>
+        <p>This page may have been cached for offline access.</p>
+
+        <button class="retry-btn" onclick="checkOnlineStatus()">Try Again</button>
+
+        <div class="cached-pages">
+            <h3>Available Offline</h3>
+            <ul id="cached-list">
+                <li>Loading cached content...</li>
+            </ul>
+        </div>
+
+        <div class="cache-status">
+            <p>Cache status: Checking...</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if user comes back online
+        function checkOnlineStatus() {
+            if (navigator.onLine) {
+                // Try to refresh the page
+                window.location.reload();
+            } else {
+                alert('You are still offline. Please check your internet connection.');
+            }
+        }
+
+        // Listen for online event
+        window.addEventListener('online', () => {
+            if (confirm('Connection restored! Reload the page to get the latest content?')) {
+                window.location.reload();
+            }
+        });
+
+        // Display cached pages if service worker is available
+        async function displayCachedPages() {
+            const cachedList = document.getElementById('cached-list');
+            const cacheStatus = document.querySelector('.cache-status p');
+
+            if (!('caches' in window)) {
+                cachedList.innerHTML = '<li>Cache API not supported</li>';
+                cacheStatus.textContent = 'Cache status: Not supported';
+                return;
+            }
+
+            try {
+                const cacheNames = await caches.keys();
+                if (cacheNames.length === 0) {
+                    cachedList.innerHTML = '<li>No cached content available</li>';
+                    cacheStatus.textContent = 'Cache status: Empty';
+                    return;
+                }
+
+                const cachedUrls = [];
+
+                // Collect cached URLs from all caches
+                for (const cacheName of cacheNames) {
+                    const cache = await caches.open(cacheName);
+                    const requests = await cache.keys();
+                    for (const request of requests) {
+                        if (!cachedUrls.includes(request.url)) {
+                            cachedUrls.push(request.url);
+                        }
+                    }
+                }
+
+                // Filter and display navigable pages
+                const pages = cachedUrls
+                    .filter(url => {
+                        try {
+                            const urlObj = new URL(url, window.location.origin);
+                            // Only show pages from this site
+                            return urlObj.origin === window.location.origin &&
+                                   (urlObj.pathname.endsWith('.html') || urlObj.pathname.endsWith('/'));
+                        } catch {
+                            return false;
+                        }
+                    })
+                    .map(url => {
+                        const urlObj = new URL(url, window.location.origin);
+                        let displayName = urlObj.pathname.slice(urlObj.pathname.lastIndexOf('/') + 1);
+                        if (!displayName || displayName === '/') {
+                            displayName = 'Home';
+                        } else if (displayName === 'index.html') {
+                            displayName = 'Home';
+                        }
+
+                        return `<li><a href="${url}">${displayName}</a></li>`;
+                    });
+
+                if (pages.length > 0) {
+                    cachedList.innerHTML = pages.join('');
+                } else {
+                    cachedList.innerHTML = '<li>No cached pages available</li>';
+                }
+
+                cacheStatus.textContent = `Cache status: ${cachedUrls.length} files cached`;
+            } catch (error) {
+                console.warn('Error displaying cached pages:', error);
+                cachedList.innerHTML = '<li>Error loading cached content</li>';
+                cacheStatus.textContent = 'Cache status: Error';
+            }
+        }
+
+        // Display cached content when page loads
+        displayCachedPages();
+
+        // Periodic check for connectivity
+        setInterval(() => {
+            checkOnlineStatus();
+        }, 30000); // Check every 30 seconds
+    </script>
+</body>
+</html>
