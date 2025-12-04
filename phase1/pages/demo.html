@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - buildAR BETA</title>
+  <link rel="stylesheet" href="../css/text.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../assets/images/ar-logo.png" alt="Logo">
+        buildAR BETA
+      </a>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <h1 style="text-align: left; padding-bottom: 3rem;">Huber Zip System Installation Guide</h1>
+
+      <section id="description" class="section" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <h2 style="font-size: 1.2rem;">Product Description</h2>
+        <p>A revolutionary structural roof and wall system that streamlines weatherization with an integrated air and water-resistive barrier. The Huber Zip System provides a complete weatherization solution for building envelopes, ensuring energy efficiency and long-lasting performance.</p>
+      </section>
+
+      <section id="video" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <h2 style="font-size: 1.2rem;">Video</h2>
+        <video class="responsive-media video-responsive" src="../assets/videos/huber-zip-1.mp4" controls preload="metadata" aria-label="Overview demonstration video of the Huber Zip System" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></video>
+      </section>
+
+      <section id="model" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <h2 style="font-size: 1.2rem;">Interactive 3D Model</h2>
+        <div class="responsive-media model-card" style="border: 1px solid #eaeaea; border-radius: 8px; padding: 1.5rem; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 400px;">
+          <model-viewer src="../assets/models/model.glb" alt="3D Model of Huber Zip System" camera-controls auto-rotate autoplay style="width: 100%; height: 100%;"></model-viewer>
+        </div>
+      </section>
+
+      <section id="pdf" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <h2 style="font-size: 1.2rem;">Detailed Installation Guide (PDF)</h2>
+        <embed class="responsive-media" src="../assets/pdfs/huber-zip-install-1.pdf" type="application/pdf" width="100%" height="600px" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+      </section>
+    </div>
+
+    <div class="sticky-nav" id="main-nav">
+      <div class="container">
+        <nav>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#video">Video</a></li>
+            <li><a href="#model">3D Model</a></li>
+            <li><a href="#pdf">Installation Guide</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
+  <script src="../js/app.js"></script>
+</body>
+</html>
