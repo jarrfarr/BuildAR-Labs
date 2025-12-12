@@ -8,8 +8,51 @@
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#ffffff">
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-</head>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        .specs-table {
+            background: linear-gradient(135deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .spec-row {
+            display: flex;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: background-color 0.2s ease;
+        }
+
+        .spec-row:hover {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-property, .spec-value {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .spec-property {
+            flex: 0 0 200px;
+            font-weight: bold;
+            color: #000;
+            border-right: 1px solid rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.02);
+        }
+
+        .spec-value {
+            flex: 1;
+            color: #666;
+            font-weight: 500;
+        }
+    </style>
+  </head>
 <body>
   <header>
     <div class="container">
@@ -17,6 +60,7 @@
         <img src="../assets/images/ar-logo.png" alt="Logo">
         buildAR BETA
       </a>
+      <a href="404.html" class="btn-outline">Sign In</a>
     </div>
   </header>
   <main>
@@ -26,23 +70,52 @@
       <section id="description" class="section" style="padding-top: 2rem; padding-bottom: 2rem;">
         <h2 style="font-size: 1.2rem;">Product Description</h2>
         <p>A revolutionary structural roof and wall system that streamlines weatherization with an integrated air and water-resistive barrier. The Huber Zip System provides a complete weatherization solution for building envelopes, ensuring energy efficiency and long-lasting performance.</p>
+
+        <h3 style="font-size: 1rem; margin-top: 2rem;">Key Features Comparison</h3>
+        <div class="specs-table">
+          <div class="spec-row">
+            <div class="spec-property">Feature</div>
+            <div class="spec-value">Huber Zip</div>
+            <div class="spec-value">Traditional Systems</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-property">Weatherization</div>
+            <div class="spec-value">Integrated air and water barrier</div>
+            <div class="spec-value">Multiple separate components</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-property">Installation Time</div>
+            <div class="spec-value">Streamlined process</div>
+            <div class="spec-value">Time-consuming with multiple steps</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-property">Energy Efficiency</div>
+            <div class="spec-value">High performance barrier</div>
+            <div class="spec-value">Variable depending on installation</div>
+          </div>
+        </div>
       </section>
 
       <section id="video" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
         <h2 style="font-size: 1.2rem;">Video</h2>
-        <video class="responsive-media video-responsive" src="../assets/videos/huber-zip-1.mp4" controls preload="metadata" aria-label="Overview demonstration video of the Huber Zip System" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></video>
+        <video class="responsive-media video-responsive" src="../assets/videos/huber-zip-1.mp4" controls preload="metadata" aria-label="Overview demonstration video of the Huber Zip System" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></video>
       </section>
 
       <section id="model" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
         <h2 style="font-size: 1.2rem;">Interactive 3D Model</h2>
-        <div class="responsive-media model-card" style="border: 1px solid #eaeaea; border-radius: 8px; padding: 1.5rem; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 400px;">
-          <model-viewer src="../assets/models/model.glb" alt="3D Model of Huber Zip System" camera-controls auto-rotate autoplay style="width: 100%; height: 100%;"></model-viewer>
+        <div class="responsive-media model-card" style="border: 1px solid #eaeaea; border-radius: 15px; padding: 1.5rem; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 400px; position: relative;">
+          <model-viewer src="../assets/models/model.glb" alt="3D Model of Huber Zip System" camera-controls auto-rotate autoplay style="width: 100%; height: 100%;" id="model-demo"></model-viewer>
+          <button class="modern-btn" onclick="document.getElementById('model-demo').requestFullscreen()" style="position: absolute; bottom: 2rem; right: 2rem; padding: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+          </button>
         </div>
       </section>
 
       <section id="pdf" class="section" style="padding-top: 2rem; padding-bottom: 4rem;">
         <h2 style="font-size: 1.2rem;">Detailed Installation Guide (PDF)</h2>
-        <embed class="responsive-media" src="../assets/pdfs/huber-zip-install-1.pdf" type="application/pdf" width="100%" height="600px" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+        <embed class="responsive-media" src="../assets/pdfs/huber-zip-install-1.pdf" type="application/pdf" width="100%" height="600px" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
       </section>
     </div>
 
@@ -61,5 +134,31 @@
     </div>
   </main>
   <script src="../js/app.js"></script>
+  <script>
+    const navLinks = document.querySelectorAll('.sticky-nav nav a');
+    const sections = document.querySelectorAll('.section');
+
+    function updateActiveLink() {
+      let current = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150; // adjusted for header and slight offset
+        if (scrollY >= sectionTop) {
+          current = section.id;
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    updateActiveLink(); // initial
+
+    window.addEventListener('scroll', updateActiveLink);
+  </script>
 </body>
 </html>

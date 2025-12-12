@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Table Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
+    <style>
+        /* Copied styles for table and body */
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            color: #ffffff;
+            font-family: 'Stack Sans Text', sans-serif;
+        }
+
+        h2 {
+            margin: 0 0 1.5rem 0;
+        }
+
+        .specs-table {
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .spec-row {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.2s ease;
+        }
+
+        .spec-row:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-property, .spec-value {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            font-family: 'Stack Sans Text', sans-serif;
+        }
+
+        .spec-property {
+            flex: 0 0 200px;
+            font-weight: bold;
+            color: #ffffff;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .spec-value {
+            flex: 1;
+            color: #cccccc;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <h2>Technical Specifications</h2>
+    <div class="specs-table">
+        <div class="spec-row">
+            <div class="spec-property"><strong>Material:</strong></div>
+            <div class="spec-value">6mil reinforced polyethylene film with aluminum foil backing</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-property"><strong>Dimensions:</strong></div>
+            <div class="spec-value">10' x 100' rolls, custom cut available</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-property"><strong>Perm Rating:</strong></div>
+            <div class="spec-value">0.05 perms (Class I vapor retarder)</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-property"><strong>Temperature Range:</strong></div>
+            <div class="spec-value">-50°F to 200°F</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-property"><strong>Installation:</strong></div>
+            <div class="spec-value">Mechanical fasteners + adhesive tape</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-property"><strong>Warranty:</strong></div>
+            <div class="spec-value">5 years against UV degradation</div>
+        </div>
+    </div>
+</body>
+</html>
