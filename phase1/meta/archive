@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Source Mock Page - buildAR BETA</title>
+    <link rel="stylesheet" href="../css/text.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#ffffff" />
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <style>
+      /* Responsive testing indicators */
+      .device-indicator {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 1000;
+      }
+
+      @media (max-width: 500px) {
+        .device-indicator {
+          background: rgba(255, 0, 0, 0.8);
+        }
+        .device-indicator:after {
+          content: "Mobile (<500px)";
+        }
+      }
+
+      @media (min-width: 501px) and (max-width: 768px) {
+        .device-indicator:after {
+          content: "Tablet (501-768px)";
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 992px) {
+        .device-indicator:after {
+          content: "Small Desktop (769-992px)";
+        }
+      }
+
+      @media (min-width: 993px) {
+        .device-indicator:after {
+          content: "Large Desktop (>992px)";
+        }
+      }
+
+      /* Text spread styling */
+      .text-spread {
+        margin: 1rem 0;
+        line-height: 1.6;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .text-spread h1,
+      .text-spread h2,
+      .text-spread h3,
+      .text-spread h4,
+      .text-spread p,
+      .text-spread ul,
+      .text-spread ol,
+      .text-spread li {
+        margin: 0.5rem 0;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .text-spread h1,
+      .text-spread h2,
+      .text-spread h3,
+      .text-spread h4 {
+        margin-bottom: 0.2rem;
+      }
+
+      .text-spread ul,
+      .text-spread ol {
+        margin-left: 1.5rem;
+        padding-left: 0.5rem;
+      }
+
+      .text-spread li {
+        margin: 0.25rem 0;
+      }
+
+      /* Button organization */
+      .button-spread {
+        margin: 2rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      /* Ensure all buttons use the proper font */
+      .modern-btn,
+      .btn-secondary,
+      .btn-outline {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* Media elements */
+      .media-spread {
+        margin: 3rem 0;
+      }
+
+      .media-item {
+        margin: 2rem 0;
+      }
+
+      .test-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .test-pdf {
+        width: 100%;
+        height: 600px;
+        margin: 1rem 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      .test-model {
+        width: 100%;
+        height: 500px;
+        margin: 1rem 0;
+        border-radius: 8px;
+        background-color: #f5f5f5;
+      }
+
+      .test-video {
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0;
+        border-radius: 8px;
+      }
+
+      .test-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 1rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+      }
+
+      .test-table th,
+      .test-table td {
+        padding: 1rem;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      .test-table th:first-child,
+      .test-table td:first-child {
+        border-left: none;
+      }
+
+      .test-table th:last-child,
+      .test-table td:last-child {
+        border-right: none;
+      }
+
+      .test-table tr:first-child th {
+        border-top: none;
+      }
+
+      .test-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .test-table th {
+        background-color: #f5f5f5;
+      }
+
+      .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      /* Stylized text containers from hand.html */
+      div.note-resource {
+        background-color: #ecfdf5;
+        border: 1.5px solid #a7f3d0;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        max-width: 100%;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.04);
+      }
+
+      div.note-resource p {
+        color: #000000 !important;
+        margin: 0;
+      }
+
+      div.note-warning {
+        background-color: #fff4e5;
+        border: 1.5px solid #ffe082;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        max-width: 100%;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.04);
+      }
+
+      div.note-warning p {
+        color: #000000 !important;
+        margin: 0;
+      }
+
+      div.note-danger {
+        background-color: #fee2e2;
+        border: 1.5px solid #fecaca;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        max-width: 100%;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.04);
+      }
+
+      div.note-danger p {
+        color: #000000 !important;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <a href="../index.html" class="logo">
+          <img
+            src="../assets/images/ar-logo.png"
+            alt="Logo"
+            style="height: 40px; width: auto"
+          />
+          buildAR BETA
+        </a>
+        <a href="404.html" class="btn-outline">Sign In</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <!-- Page Title (h1) -->
+        <div class="text-spread">
+        <h1>Demo Page</h1>
+        </div>
+
+        <!-- Vertical separation between title and content -->
+        <div style="margin: 2rem 0;"></div>
+
+        <!-- Page Info Card with Tags -->
+          <div
+            style="
+              background-color: #f8f9fa;
+              padding: 0.75rem;
+              border-radius: 8px;
+              margin: 0.5rem 0;
+              font-size: 0.9rem;
+            "
+          >
+            <div style="display: flex; flex-direction: column; gap: 0.25rem">
+              <div style="display: flex; align-items: center">
+                <span style="font-weight: 600; color: #666; min-width: 60px"
+                  >Date:</span
+                >
+                <span style="margin-left: 0.5rem">January 7, 2026</span>
+              </div>
+              <div style="display: flex; align-items: center">
+                <span style="font-weight: 600; color: #666; min-width: 60px"
+                  >Author:</span
+                >
+                <span style="margin-left: 0.5rem">John Smith</span>
+              </div>
+              <div style="display: flex; align-items: center">
+                <span style="font-weight: 600; color: #666; min-width: 60px"
+                  >Version:</span
+                >
+                <span style="margin-left: 0.5rem">1.0</span>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 0.5rem;
+                border-top: 1px solid #e9ecef;
+                padding-top: 0.5rem;
+              "
+            >
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+                <span
+                  style="
+                    background-color: #e9ecef;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    color: #495057;
+                    white-space: nowrap;
+                  "
+                  >Demo</span
+                >
+                <span
+                  style="
+                    background-color: #e9ecef;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    color: #495057;
+                    white-space: nowrap;
+                  "
+                  >Template</span
+                >
+                <span
+                  style="
+                    background-color: #e9ecef;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    color: #495057;
+                    white-space: nowrap;
+                  "
+                  >Responsive</span
+                >
+                <span
+                  style="
+                    background-color: #e9ecef;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    color: #495057;
+                    white-space: nowrap;
+                  "
+                  >Web Design</span
+                >
+                <span
+                  style="
+                    background-color: #e9ecef;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    color: #495057;
+                    white-space: nowrap;
+                  "
+                  >UI/UX</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Paragraph -->
+          <p>
+            This is a simple mock page that you can use as a template to create
+            more pages. The purpose of this demo page is to showcase how
+            different types of content elements flow and respond across various
+            screen sizes. By including multiple paragraphs, headings, buttons,
+            and media elements, you can easily test the responsive behavior and
+            ensure your content looks great on all devices.
+          </p>
+          <br />
+
+          <!-- Heading 2 -->
+          <h2>Media Elements</h2>
+
+          <!-- Paragraph -->
+          <p>
+            Below are examples of different media types that you might want to
+            include in your web pages. Each media type has its own unique
+            characteristics and use cases. PDF documents are great for technical
+            documentation and guides that users can download or view directly in
+            the browser. Videos are excellent for tutorials, demonstrations, and
+            engaging multimedia content. Tables help organize data in a
+            structured format, making it easy for users to compare information.
+            3D models provide interactive visualization capabilities for
+            architectural designs, product showcases, and educational content.
+          </p>
+
+        <!-- Buttons -->
+        <div class="button-spread">
+          <button class="modern-btn">Modern Button</button>
+          <button class="btn-secondary">Secondary Button</button>
+          <button class="btn-outline">Outline Button</button>
+        </div>
+
+        <!-- Stylized Text Containers -->
+        <div class="note-resource">
+          <p style="font-weight: 600; margin: 0">Resource</p>
+          <p style="margin: 0">
+            This is a resource container with green styling. It can be used to
+            highlight important resources, documentation, or helpful information
+            for users.
+          </p>
+        </div>
+
+        <div class="note-warning">
+          <p style="font-weight: 600; margin: 0">Warning</p>
+          <p style="margin: 0">
+            This is a warning container with orange styling. It's perfect for
+            alerting users about potential issues, limitations, or things to be
+            cautious about.
+          </p>
+        </div>
+
+        <div class="note-danger">
+          <p style="font-weight: 600; margin: 0">Danger</p>
+          <p style="margin: 0">
+            This is a danger container with red styling. Use this for critical
+            alerts, errors, or important warnings that require immediate
+            attention.
+          </p>
+        </div>
+
+        <!-- Media Elements -->
+        <div class="media-spread">
+          <!-- Installation Guide PDF -->
+          <div class="media-item">
+            <h3 style="margin-bottom: 0.5rem;">Installation Guide</h3>
+            <p style="margin-bottom: 1rem; color: #666;">Download the comprehensive installation guide for proper setup and configuration.</p>
+            <embed
+              src="../assets/pdfs/huber-rainscreen-install-1.pdf"
+              type="application/pdf"
+              class="test-pdf"
+            />
+          </div>
+
+          <!-- Installation Video -->
+          <div class="media-item">
+            <h3 style="margin-bottom: 0.5rem;">Installation Video</h3>
+            <p style="margin-bottom: 1rem; color: #666;">Watch our step-by-step installation video tutorial for visual guidance.</p>
+            <video controls class="test-video">
+              <source src="../assets/videos/huber-zip-1.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <!-- Technical Specifications -->
+          <div class="media-item">
+            <h3 style="margin-bottom: 0.5rem;">Technical Specifications</h3>
+            <p style="margin-bottom: 1rem; color: #666;">Review the detailed technical specifications and compatibility information.</p>
+            <div style="overflow-x: auto">
+              <table class="test-table">
+                <thead>
+                  <tr>
+                    <th>Element Type</th>
+                    <th>Format</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PDF Documents</td>
+                    <td>PDF</td>
+                    <td>Technical documentation and guides</td>
+                  </tr>
+                  <tr>
+                    <td>Videos</td>
+                    <td>MP4</td>
+                    <td>Instructional and demonstration videos</td>
+                  </tr>
+                  <tr>
+                    <td>3D Models</td>
+                    <td>GLB</td>
+                    <td>Interactive 3D models for visualization</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 3D Product Model -->
+          <div class="media-item">
+            <h3 style="margin-bottom: 0.5rem;">3D Product Model</h3>
+            <p style="margin-bottom: 1rem; color: #666;">Explore the interactive 3D model to examine the product from all angles.</p>
+            <model-viewer
+              src="../assets/models/model.glb"
+              alt="3D Model"
+              camera-controls
+              auto-rotate
+              autoplay
+              class="test-model"
+            >
+            </model-viewer>
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-nav" id="main-nav">
+        <div class="container">
+          <nav>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="../pages/demo.html">Demo</a></li>
+              <li><a href="../pages/model-demo.html">Model Demo</a></li>
+              <li><a href="../pages/digital-assets.html">Digital Assets</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </main>
+    <script src="../js/app.js"></script>
+  </body>
+</html>

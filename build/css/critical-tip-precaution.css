@@ -1,0 +1,32 @@
+/* Critical, Pro Tip, and Precautions CSS extracted from style.css */
+
+.card-block.critical p,
+.card-block.tip p,
+.card-block.safety p {
+    padding: 0.75rem 1rem;
+    margin: 0;
+}
+
+.card-block.critical {
+    background: rgba(255,200,100,0.1);
+    border: 1px solid rgba(255,200,100,0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.card-block.tip {
+    background: rgba(100,200,255,0.1);
+    border: 1px solid rgba(100,200,255,0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.card-block.safety {
+    background: rgba(255,150,150,0.1);
+    border: 1px solid rgba(255,150,150,0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 1rem 0;
+}
